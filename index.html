@@ -46,8 +46,8 @@ body{
 .slot{position:absolute;left:0;top:0;width:var(--sz);height:var(--sz);margin:calc(var(--sz) / -2) 0 0 calc(var(--sz) / -2);
   animation:ox var(--T) cubic-bezier(.37,0,.63,1) var(--dx) infinite alternate}
 .lane{width:100%;height:100%;animation:oy var(--T) cubic-bezier(.37,0,.63,1) var(--dy) infinite alternate}
-@keyframes ox{from{translate:calc(var(--rx) * -1) 0}to{translate:var(--rx) 0}}
-@keyframes oy{from{translate:0 calc(var(--ry) * -1)}to{translate:0 var(--ry)}}
+@keyframes ox{from{transform:translateX(calc(var(--rx) * -1))}to{transform:translateX(var(--rx))}}
+@keyframes oy{from{transform:translateY(calc(var(--ry) * -1))}to{transform:translateY(var(--ry))}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---------- Vida en el fondo ---------- */
@@ -179,16 +179,6 @@ body{
 
 @media (max-aspect-ratio:1/1){.hole{--s:min(34vw,300px)}}
 @media (max-height:500px){.hole{--s:min(28vmin,300px)}}
-@media (prefers-reduced-motion:reduce){
-  .slot,.lane{animation-play-state:paused}
-  .disk,.halo,.dust i,.nebula i,.milky,.pulse{animation:none}
-  .spark{animation:none;opacity:.5}
-  .shoot,.wave,.mote{display:none}
-  .ln{opacity:1;filter:none;transform:none;animation:none!important}
-  .orn,.letter h2,.portal::before{animation:none}
-  .star{animation:none;opacity:.6}
-  .card{animation:appear .01s forwards}
-}
 </style>
 </head>
 <body>
@@ -283,7 +273,7 @@ for (let i = 0; i < (N < 120 ? 5 : 8); i++) {
 
 /* Estrellas fugaces ocasionales */
 const sky = $("sky"), psky = $("psky");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduce = false;   // la galaxia siempre se mueve, incluso si el teléfono tiene animaciones reducidas
 function spawn(host) {
   const W = innerWidth, H = innerHeight, toRight = Math.random() > .5;
   const a = (toRight ? rnd(18, 38) : 180 - rnd(18, 38)) * Math.PI / 180, dist = rnd(260, 520);
